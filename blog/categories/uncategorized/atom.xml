@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Uncategorized | Kierans Blog]]></title>
+  <link href="http://TigerWolf.github.io/blog/categories/uncategorized/atom.xml" rel="self"/>
+  <link href="http://TigerWolf.github.io/"/>
+  <updated>2014-09-23T21:58:38+09:30</updated>
+  <id>http://TigerWolf.github.io/</id>
+  <author>
+    <name><![CDATA[Kieran]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[RubyMotion Android Beta Tip]]></title>
+    <link href="http://TigerWolf.github.io/2014/09/rubymotion-android-beta-tip/"/>
+    <updated>2014-09-23T00:00:00+09:30</updated>
+    <id>http://TigerWolf.github.io/2014/09/rubymotion-android-beta-tip</id>
+    <content type="html"><![CDATA[<p>I have been trying out the new Android RubyMotion beta and have been trying out the code samples.</p>
+
+<p>One thing I was frustrated about was having to keep putting the NDK and SDK path in the Rakefile. Here is a quick tip to make it easier.</p>
+
+<p>Create a file somewhere like ~/motion/common.rb</p>
+
+<p>`<br />
+@app.sdk_path = &lsquo;/Android/sdk&rsquo;<br />
+@app.ndk_path = &lsquo;/Android/ndk&rsquo;<br />
+@app.api_version = &ldquo;19&rdquo;<br /></p>
+
+<h1>other common configs<br /></h1>
+
+<p>`</p>
+
+<p>Inside the Rakefile for each app:</p>
+
+<p>&#8220;<br />
+$:.unshift(&ldquo;/Library/RubyMotionPre/lib&rdquo;)<br />
+require &lsquo;motion/project/template/android&rsquo;</p></p>
+
+<p><p>Motion::Project::App.setup do |app|<br />
+  # Use `rake config&#8217; to see complete project settings.<br />
+  app.name = &lsquo;Paint&rsquo;<br />
+  @app = app<br />
+  require &lsquo;~/motion/common.rb&rsquo;<br />
+end<br />
+&#8220;</p>
+
+<p>If you have a better way to do it, post in the comments below.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Talk: Introduction to Mongodb and Mongoid]]></title>
+    <link href="http://TigerWolf.github.io/2014/04/talk-introduction-to-mongodb-and-mongoid/"/>
+    <updated>2014-04-02T00:00:00+10:30</updated>
+    <id>http://TigerWolf.github.io/2014/04/talk-introduction-to-mongodb-and-mongoid</id>
+    <content type="html"><![CDATA[<p>I did a talk recently at adelaide.rb and I thought I would share my talk notes, slides and code on my blog for you all to see. Click read more to see it all:</p>
+
+<p><a href="https://github.com/TigerWolf/mongoid_presentation" title="https://github.com/TigerWolf/mongoid_presentation">https://github.com/TigerWolf/mongoid_presentation</a></p>
+
+<!--more-->
+
+
+<p><strong>Presentation notes</strong></p>
+
+<p>So what is it? Its not quite like the relational databases that most of you would be familiar with like Postgres, Mysql and sqllite. Mongodb is a database that does a really good job of storing documents. Its classified as a NoSQL database and ditches the traditional table-like schema and instead uses JSON like structures. It is used by some major websites including: Craigslist, eBay, Foursquare, SourceForge, and The New York Times. Mongo is the most popular NoSQL database.</p>
+
+<p>Why would you use it? Well mongodb was designed to be fast scalable and flexible. This is mostly because it doesn&#8217;t have relationships or a strict schema. It is also really easy to horizontally scale by adding more nodes. By design, a lot of the work and processing is done on the client (mongoid) over the db server. These design decisions all help keep it fast, scalable and flexible.</p>
+
+<p>One of the cool things about Mongo is that the console is a javascript interpreter which would be familiar to a lot of you here today.</p>
+
+<p>I am sure you are keen to see a demo! I will load up the console now and show you around.</p>
+
+<p><em>See the git repository for the demo.</em></p>
+
+<p>Now that I have shown you the awesomeness of mongodb. Lets check out mongoid, the ruby ORM for mongodb. The philosophy of Mongoid is to provide a familiar API to Ruby developers who have been using ActiveRecord of Data Mapper.</p>
+
+<p>Mongoid community:<br/>
+The mongoid community is quite abundant, you can join in at<br/>
+It has Solid documentation at <a href="http://mongoid.org  ">http://mongoid.org  </a>
+An active irc at #mongoid<br/>
+Also a Mailing List <a href="http://groups.google.com/group/mongoid">http://groups.google.com/group/mongoid</a></p>
+
+<p>It also hooks into Active Model, so you get all of the rails goodness. I will show you how to use all of these with Mongoid.</p>
+
+<p>validations<br/>
+mass assignment<br/>
+serialization (like to_json)<br/>
+scopes<br/>
+callbacks<br/>
+timestamps.<br/>
+and many more.</p>
+
+<p>Its also framework agnostic and will work with Sinatra or Padrino.</p>
+
+<p>It also works alongside other ORM’s. For example ActiveRecord or DataMapper. You can create relationships between the two and easily model data that is better in a relational database separately. This allows for a lot of flexibility.</p>
+
+<p>Some of the main features of the Mongoid gem are:</p>
+
+<p>Its powerful query language. It will be familiar to ActiveRecord users. Here are some examples for querying a user. There is standard stuff like searching by name and also greater than and less than operators.</p>
+
+<p>User.where(:name => &#8220;John&#8221;)<br/>
+User.all(:age.lt => 24, :age.gt => 18)<br/>
+User.where(:title.in => %w(Ms Mrs))</p>
+
+<p>You can also search in sub documents, like the address of a person.</p>
+
+<p>Person.where(&#8220;addresses.locations.name&#8221; => &#8220;Chicago&#8221;)</p>
+
+<p>You can also set named scopes just like in activerecord:</p>
+
+<p>class User<br/>
+scope :active, :status => &#8216;active&#8217;<br/>
+scope :over, :lambda { |age| where(:age.gt => age) }<br/>
+end</p>
+
+<p>User.where(:name => /^J/).active.over(40)</p>
+
+<p>This makes it easy to clean up code where you use these queries regularly.</p>
+
+<p>Validation</p>
+
+<p>Mongoid includes ActiveModel::Validations to supply the basic validation as well as a associated and uniqueness validator.</p>
+
+<p>Some examples:</p>
+
+<p>validates_associated :episodes<br/>
+validates :episodes, associated: true</p>
+
+<p>Be aware that Mongoid only validates documents in memory.</p>
+
+<p>validates_length_of :password, minimum: 8, maximum: 16<br/>
+validates :password, length: { minimum: 8, maximum: 16 }</p>
+
+<p>It also has the alternative syntax as you can see in the examples.</p>
+
+<p>Another awesome feature of mongodb and mongoid is how it handles</p>
+
+<p>Geospacial indexes</p>
+
+<p>Say you had a set of geo locations that you wanted to store you could model them like so.</p>
+
+<p>class Spot<br/>
+include Mongoid::Document</p>
+
+<p>field :name, :type => String<br/>
+field :latlng, :type => Array</p>
+
+<p>index [[:latlng, Mongo::GEO2D]]<br/>
+end</p>
+
+<p>Using this you could then create a location.</p>
+
+<p>Ruby Spot.create( :name => &#8220;Majoran Distillery&#8221;, :latlng => [34.924349,138.600379] )</p>
+
+<p>Using this location, and having others already stored in your database you can do</p>
+
+<p>Spot.where(:latlng.near => majoran.latlng)</p>
+
+<h1>=> [“Majoran Distillery”, ”Cibo”, “Westpac” ]</h1>
+
+<p>Or also:</p>
+
+<p>Bar.where(:likes.gt => 100).geo_near([ 50, 12 ]).spherical</p>
+
+<p>There are some popular projects out there that use mongodb. Be sure to check out locomotive cms, Shapado a Q&amp;A style site and Graylog2 for sorting server logs.</p>
+
+<p>Application Spotlight:</p>
+
+<p>Now I will show you a demo application that makes use of Mongoid and displays a list of TV shows from a gem that I am currently working on. This is just a rough use case.</p>
+
+<p>The interface is using angular js and calls the sinatra backend to display the list of TV shows.</p>
+
+<p><em>See this is the git repository.</em></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[330]]></title>
+    <link href="http://TigerWolf.github.io/2014/03/330/"/>
+    <updated>2014-03-25T00:00:00+10:30</updated>
+    <id>http://TigerWolf.github.io/2014/03/330</id>
+    <content type="html"><![CDATA[<p>It was interesting to find out how they confirmed that MH370 crashed over the indian ocean.</p>
+
+<p>The planes navigation system was communicating to a satellite even though the main transponder was turned off and it communicated every hour. The Satcom &#8220;which collects information such as location, altitude, heading and speed, and sends it through Inmarsat’s satellites into their network&#8221;. The signal didnt contain any gps or location data so the analysts used techniques never used before, using the doppler effect (which describes how a wave changes frequency relative to the movement of an observer) and mathematical analysis so they could work out where the plane last was before it crashed. It was suspected the plane was above 30,000ft before it crashed.</p>
+
+<p>The challenge now will be finding the black box before the battery runs out for the device in the black box that &#8220;pings&#8221; its location. If they do find it then the challenge of recovering it from such great depths in sea that has strong currents and dangerous weather.</p>
+
+<p><a href="http://kieranandrews.com.au/wp-content/uploads/2014/03/MH370_Mar17.jpg"><img src="http://kieranandrews.com.au/wp-content/uploads/2014/03/MH370_Mar17-265x300.jpg" alt="MH370_Mar17" width="265" height="300" class="alignnone size-medium wp-image-333" /></a></p>
+
+<p><a href="http://m.smh.com.au/world/mh370-search-how-new-satellite-data-confirmed-malaysia-airlines-plane-was-lost-20140325-hvme8.html" title="http://m.smh.com.au/world/mh370-search-how-new-satellite-data-confirmed-malaysia-airlines-plane-was-lost-20140325-hvme8.html">http://m.smh.com.au/world/mh370-search-how-new-satellite-data-confirmed-malaysia-airlines-plane-was-lost-20140325-hvme8.html</a><br/>
+<a href="http://www.gmanetwork.com/news/story/353977/scitech/technology/inmarsat-analyzed-mh370-pings-to-plot-final-route">http://www.gmanetwork.com/news/story/353977/scitech/technology/inmarsat-analyzed-mh370-pings-to-plot-final-route</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[A Story From Guild Wars 2]]></title>
+    <link href="http://TigerWolf.github.io/2014/01/a-story-from-guild-wars-2/"/>
+    <updated>2014-01-03T00:00:00+10:30</updated>
+    <id>http://TigerWolf.github.io/2014/01/a-story-from-guild-wars-2</id>
+    <content type="html"><![CDATA[<p>I really enjoy computer games, its my main form of entertainment in the evening and a great stress reliever. I get so much enjoyment out of it that I was inspired to write a short story from my perspective and I thought would share it with you. This is from Guild Wars 2 (some references are very game specific).</p>
+
+<blockquote><p>I said my goodbyes the Militia on TeamSpeak and dropped my WvW Commander Tag, just after having defeated a Sanctum of Rall zerg.</p>
+
+<p>What a good night, I thought.</p>
+
+<p>A few weeks ago I got excited about some changes to WvW that I had missed and wanted to check them out. I had been enjoying the new Living Story content but wanted to do something a little different. I jumped into World vs World and the first thing I noticed was that on the Borderlands the lake is gone! This looked like a big change, but on further inspection its quite simple. Now in the middle of the map is a set of capture points that allow a server to get the upper hand if they capture 3 of the 5 points. I was told on TeamSpeak that this was to replace the old orb system.</p>
+
+<p>I have been venturing onto BlackGate TeamSpeak server recently and its not as scary as I thought. I joined the channel for the borderland map I was on and I was pleasantly surprised by the commander which was on this same map. His name was Cuddlepie and had a good manner, running alongside him we ventured into enemy territory. We faced a big zerg almost twice our size that I thought we woudlnt be able to take on. Cuddlepie kept his cool and issued commands, like &#8220;head to the left then split them in half&#8221;, &#8220;take it to their backlines&#8221;. With his focus and strategy we where able to take down the entire zerg. What a rush!</p>
+
+<p>We continued on and took several towers and keeps. I had a really good night. Later in the week I joined again and where greeted by another commander from a guild called KING and he had a different game plan. We defended garrison from several attacks and got lots of badges. There feels like they is always some action and some really good commanders that I feel like our strong ties with BlackGate WvW community are such an untapped resource.</p>
+
+<p>Tonight, I jumped in and we where getting smashed by Jade Quarry. The commander tonight was Stellioz. I noticed the he has a philippines accent (I didnt know for a long while) and got really excited about WvW and showed some great skill in open field battles. The night continued on and I really enjoyed by time. He had to grab some dinner and we where left without a commander. I decided that I would give it a go, even though I didnt feel completely confident that I knew all of the current intel in WvW, I did it anyway as there where 5 Resonance online and in BlackGate TS so I thought &#8220;Why not?&#8221;. We where outnumbered and we took a few camps. We tried some things like some ninja trebs but the scouts where on to our plan. Later we defended our Tower several times against both Sancum and Jade. We responded to a Treb and took it out and saved our tower! Just as we saved our tower from an invading group we spotted a zerg bigger than ours.</p>
+
+<p>We didnt have many numbers at this time in the night and I wasnt sure we where able to take them on. We tracked them to a chocked point. Then we engaged them once and they rallied behind the tower. Just as things go quiet, Stellioz came back from dinner and jumped in too. We spotted another group, this time bigger than the last! Stellioz said we could take them and offered some comments on how we would engage them.</p>
+
+<p>We where off!</p>
+
+<p>Running right into the thick of the battle, dropping some fire for might and blasting it on our way through. We focused the back lines and taking out the elles and the necros. A few of us dropped and our warriors threw down banners getting our downed up. It finally looked like we would win! We cleaned up the rest some backing and frowing and we took out the zerg.</p>
+
+<p>The end.</p></blockquote>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Map Reduce: My Recent Talk]]></title>
+    <link href="http://TigerWolf.github.io/2013/11/map-reduce-my-recent-talk/"/>
+    <updated>2013-11-11T00:00:00+10:30</updated>
+    <id>http://TigerWolf.github.io/2013/11/map-reduce-my-recent-talk</id>
+    <content type="html"><![CDATA[<p>I recently made a talk for Map Reduce with a focus on Ruby.</p>
+
+<p>You can see the slideshow here</p>
+
+<p><a title="http://slid.es/kieranandrews/map-reduce-in-ruby" href="http://slid.es/kieranandrews/map-reduce-in-ruby" target="_blank"></p> <p>
+  <a href="http://slid.es/kieranandrews/map-reduce-in-ruby">http://slid.es/kieranandrews/map-reduce-in-ruby</a></a>
+</p></p>
+
+<p>
+  <!--more-->
+</p>
+
+
+
+
+<p>
+  I presented the slide at Adelaide.rb Meetup and at work.
+</p>
+
+]]></content>
+  </entry>
+  
+</feed>

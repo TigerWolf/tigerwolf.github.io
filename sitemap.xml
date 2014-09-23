@@ -2,17 +2,161 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   
+  <url>
+    <loc>http://TigerWolf.github.io/2014/09/rubymotion-android-beta-tip/</loc>
+    
+    <lastmod>2014-09-23T00:00:00+09:30</lastmod>
+    
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://TigerWolf.github.io/2014/04/talk-introduction-to-mongodb-and-mongoid/</loc>
+    
+    <lastmod>2014-04-02T00:00:00+10:30</lastmod>
+    
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://TigerWolf.github.io/2014/03/330/</loc>
+    
+    <lastmod>2014-03-25T00:00:00+10:30</lastmod>
+    
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://TigerWolf.github.io/2014/01/fun-with-ruby-constants/</loc>
+    
+    <lastmod>2014-01-28T00:00:00+10:30</lastmod>
+    
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://TigerWolf.github.io/2014/01/a-story-from-guild-wars-2/</loc>
+    
+    <lastmod>2014-01-03T00:00:00+10:30</lastmod>
+    
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://TigerWolf.github.io/2013/11/map-reduce-my-recent-talk/</loc>
+    
+    <lastmod>2013-11-11T00:00:00+10:30</lastmod>
+    
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://TigerWolf.github.io/2013/09/the-mystical-tableless-model-for-rails/</loc>
+    
+    <lastmod>2013-09-11T00:00:00+09:30</lastmod>
+    
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://TigerWolf.github.io/2012/12/startup-weekend-adelaide-my-experiences/</loc>
+    
+    <lastmod>2012-12-14T00:00:00+10:30</lastmod>
+    
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://TigerWolf.github.io/2012/08/php-debugging/</loc>
+    
+    <lastmod>2012-08-15T00:00:00+09:30</lastmod>
+    
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://TigerWolf.github.io/2012/04/yii-and-authorization-rules-rbac/</loc>
+    
+    <lastmod>2012-04-17T00:00:00+09:30</lastmod>
+    
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://TigerWolf.github.io/2011/03/jquery-scrolling-box/</loc>
+    
+    <lastmod>2011-03-07T00:00:00+10:30</lastmod>
+    
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://TigerWolf.github.io/2011/02/web-development/</loc>
+    
+    <lastmod>2011-02-14T00:00:00+10:30</lastmod>
+    
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://TigerWolf.github.io/2010/08/codeigniter-and-netbeans/</loc>
+    
+    <lastmod>2010-08-29T00:00:00+09:30</lastmod>
+    
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://TigerWolf.github.io/2009/12/vancouver/</loc>
+    
+    <lastmod>2009-12-20T00:00:00+10:30</lastmod>
+    
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://TigerWolf.github.io/2009/12/seattle-part-2/</loc>
+    
+    <lastmod>2009-12-02T00:00:00+10:30</lastmod>
+    
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://TigerWolf.github.io/2009/11/update/</loc>
+    
+    <lastmod>2009-11-25T00:00:00+10:30</lastmod>
+    
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://TigerWolf.github.io/2009/10/hello-seattle-part-1/</loc>
+    
+    <lastmod>2009-10-29T00:00:00+10:30</lastmod>
+    
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://TigerWolf.github.io/2009/10/suprise/</loc>
+    
+    <lastmod>2009-10-14T00:00:00+10:30</lastmod>
+    
+    <priority>0.8</priority>
+  </url>
+  
   
   <url>
     <loc>http://TigerWolf.github.io/blog/archives/</loc>
-    <lastmod>2014-09-23T21:43:13+09:30</lastmod>
+    <lastmod>2014-09-23T21:58:38+09:30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://TigerWolf.github.io/</loc>
-    <lastmod>2014-09-23T21:43:13+09:30</lastmod>
+    <lastmod>2014-09-23T21:58:38+09:30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
