@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Kieran&#39;s Discoveries</title>
-    <description>A simple, beautiful theme for Jekyll that emphasizes content rather than aesthetic fluff.</description>
+    <description>Mobile developer, snowboarder and gardener. </description>
     <link>http://kieranandrews.com.au/</link>
     <atom:link href="http://kieranandrews.com.au/feed.xml" rel="self" type="application/rss+xml" />
     
