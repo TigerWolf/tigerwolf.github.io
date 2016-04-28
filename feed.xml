@@ -3,8 +3,8 @@
   <channel>
     <title>Kieran&#39;s Discoveries</title>
     <description>A simple, beautiful theme for Jekyll that emphasizes content rather than aesthetic fluff.</description>
-    <link>http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/</link>
-    <atom:link href="http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/feed.xml" rel="self" type="application/rss+xml" />
+    <link>http://kieranandrews.com.au/</link>
+    <atom:link href="http://kieranandrews.com.au/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
         <title>SystemD for your Apps</title>
@@ -35,8 +35,8 @@ WantedBy=multi-user.target
 &lt;p&gt;This comprehensive guide on systemd, &lt;a href=&quot;https://www.digitalocean.com/community/tutorials/understanding-systemd-units-and-unit-files&quot;&gt;https://www.digitalocean.com/community/tutorials/understanding-systemd-units-and-unit-files&lt;/a&gt; was very helpful to solving this problem.&lt;/p&gt;
 </description>
         <pubDate>Mon, 19 Oct 2015 07:15:48 +1030</pubDate>
-        <link>http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/2015/10/systemd-for-your-apps/</link>
-        <guid isPermaLink="true">http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/2015/10/systemd-for-your-apps/</guid>
+        <link>http://kieranandrews.com.au/2015/10/systemd-for-your-apps/</link>
+        <guid isPermaLink="true">http://kieranandrews.com.au/2015/10/systemd-for-your-apps/</guid>
       </item>
     
       <item>
@@ -94,8 +94,8 @@ github &quot;jspahrsummers/xcconfigs&quot;
 &lt;p&gt;There is a lot of options and flexibility when it comes to dependency management with iOS. Since using these different managers on different projects I have a personal preference of Cocoapods. I prefer having the packages automatically integrated, the easily searchable repository and compatibility with Objective-C and Swift for all of my projects.&lt;/p&gt;
 </description>
         <pubDate>Tue, 22 Sep 2015 01:28:51 +0930</pubDate>
-        <link>http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/2015/09/swift-dependency-managers/</link>
-        <guid isPermaLink="true">http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/2015/09/swift-dependency-managers/</guid>
+        <link>http://kieranandrews.com.au/2015/09/swift-dependency-managers/</link>
+        <guid isPermaLink="true">http://kieranandrews.com.au/2015/09/swift-dependency-managers/</guid>
       </item>
     
       <item>
@@ -151,8 +151,8 @@ db-1-uat.example.com
 &lt;p&gt;The Ansible &lt;a href=&quot;http://docs.ansible.com/ansible/playbooks_best_practices.html&quot;&gt;best practices document&lt;/a&gt; recommends this as well and naming your groups based on their location (data center).&lt;/p&gt;
 </description>
         <pubDate>Fri, 11 Sep 2015 07:48:04 +0930</pubDate>
-        <link>http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/2015/09/ansible-inventory-managment/</link>
-        <guid isPermaLink="true">http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/2015/09/ansible-inventory-managment/</guid>
+        <link>http://kieranandrews.com.au/2015/09/ansible-inventory-managment/</link>
+        <guid isPermaLink="true">http://kieranandrews.com.au/2015/09/ansible-inventory-managment/</guid>
       </item>
     
       <item>
@@ -215,8 +215,8 @@ db-1-uat.example.com
 &lt;p&gt;As you can see, this offers you many benefits. It makes your playbooks easier to read and maintain. Splitting up your playbook also allows you to pick and choose roles that you would like to run on a particular server.&lt;/p&gt;
 </description>
         <pubDate>Fri, 11 Sep 2015 06:44:26 +0930</pubDate>
-        <link>http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/2015/09/ansible-structuring-your-playbooks/</link>
-        <guid isPermaLink="true">http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/2015/09/ansible-structuring-your-playbooks/</guid>
+        <link>http://kieranandrews.com.au/2015/09/ansible-structuring-your-playbooks/</link>
+        <guid isPermaLink="true">http://kieranandrews.com.au/2015/09/ansible-structuring-your-playbooks/</guid>
       </item>
     
       <item>
@@ -266,8 +266,8 @@ db-1-uat.example.com
 &lt;p&gt;As you can see, this is a simple way to have packages on your servers installed and kept up to date. There are many more options on these modules as you will find in the ansible documentation, but these simple examples should get you started.&lt;/p&gt;
 </description>
         <pubDate>Fri, 04 Sep 2015 05:07:02 +0930</pubDate>
-        <link>http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/2015/09/ansible-packages/</link>
-        <guid isPermaLink="true">http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/2015/09/ansible-packages/</guid>
+        <link>http://kieranandrews.com.au/2015/09/ansible-packages/</link>
+        <guid isPermaLink="true">http://kieranandrews.com.au/2015/09/ansible-packages/</guid>
       </item>
     
       <item>
@@ -291,8 +291,8 @@ db-1-uat.example.com
 &lt;p&gt;I plan to post some further posts in the future about my experiences and share some of my code from my playbooks.&lt;/p&gt;
 </description>
         <pubDate>Sun, 16 Aug 2015 19:27:34 +0930</pubDate>
-        <link>http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/2015/08/learning-ansible/</link>
-        <guid isPermaLink="true">http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/2015/08/learning-ansible/</guid>
+        <link>http://kieranandrews.com.au/2015/08/learning-ansible/</link>
+        <guid isPermaLink="true">http://kieranandrews.com.au/2015/08/learning-ansible/</guid>
       </item>
     
       <item>
@@ -306,8 +306,8 @@ db-1-uat.example.com
 &lt;p&gt;If you are entering the competition, good luck!&lt;/p&gt;
 </description>
         <pubDate>Mon, 29 Jun 2015 19:59:55 +0930</pubDate>
-        <link>http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/2015/06/govhack/</link>
-        <guid isPermaLink="true">http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/2015/06/govhack/</guid>
+        <link>http://kieranandrews.com.au/2015/06/govhack/</link>
+        <guid isPermaLink="true">http://kieranandrews.com.au/2015/06/govhack/</guid>
       </item>
     
       <item>
@@ -389,8 +389,8 @@ db-1-uat.example.com
 &lt;p&gt;If you have a better way to do it, post in the comments below.&lt;/p&gt;
 </description>
         <pubDate>Wed, 24 Sep 2014 06:13:28 +0930</pubDate>
-        <link>http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/2014/09/rubymotion-android-beta-tip/</link>
-        <guid isPermaLink="true">http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/2014/09/rubymotion-android-beta-tip/</guid>
+        <link>http://kieranandrews.com.au/2014/09/rubymotion-android-beta-tip/</link>
+        <guid isPermaLink="true">http://kieranandrews.com.au/2014/09/rubymotion-android-beta-tip/</guid>
       </item>
     
       <item>
@@ -542,8 +542,8 @@ db-1-uat.example.com
 &lt;p&gt;&lt;em&gt;See this is the git repository.&lt;/em&gt;&lt;/p&gt;
 </description>
         <pubDate>Thu, 03 Apr 2014 04:21:51 +1030</pubDate>
-        <link>http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/2014/04/talk-introduction-to-mongodb-and-mongoid/</link>
-        <guid isPermaLink="true">http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/2014/04/talk-introduction-to-mongodb-and-mongoid/</guid>
+        <link>http://kieranandrews.com.au/2014/04/talk-introduction-to-mongodb-and-mongoid/</link>
+        <guid isPermaLink="true">http://kieranandrews.com.au/2014/04/talk-introduction-to-mongodb-and-mongoid/</guid>
       </item>
     
       <item>
@@ -561,8 +561,8 @@ db-1-uat.example.com
 &lt;p&gt;&lt;a href=&quot;http://www.gmanetwork.com/news/story/353977/scitech/technology/inmarsat-analyzed-mh370-pings-to-plot-final-route&quot;&gt;http://www.gmanetwork.com/news/story/353977/scitech/technology/inmarsat-analyzed-mh370-pings-to-plot-final-route&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Tue, 25 Mar 2014 17:44:42 +1030</pubDate>
-        <link>http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/2014/03/330/</link>
-        <guid isPermaLink="true">http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/2014/03/330/</guid>
+        <link>http://kieranandrews.com.au/2014/03/330/</link>
+        <guid isPermaLink="true">http://kieranandrews.com.au/2014/03/330/</guid>
       </item>
     
   </channel>
