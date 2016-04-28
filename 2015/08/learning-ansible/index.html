@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Learning Ansible &#8211; Kieran's Discoveries</title>
+    <link rel="dns-prefetch" href="//maxcdn.bootstrapcdn.com">
+    <link rel="dns-prefetch" href="//cdn.mathjax.org">
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A simple, beautiful theme for Jekyll that emphasizes content rather than aesthetic fluff.">
+    <meta name="robots" content="all">
+    <meta name="author" content="Kieran Andrews">
+    <meta name="keywords" content="Uncategorized">
+    <link rel="canonical" href="http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/2015/08/learning-ansible/">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Kieran's Discoveries" href="https://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="https://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/css/pixyll.css?201604290628" type="text/css">
+
+    <!-- Fonts -->
+    
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+    
+
+    <!-- MathJax -->
+    
+
+    <!-- Verifications -->
+    
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="en_US">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Learning Ansible">
+    <meta property="og:description" content="A simple, beautiful theme for Jekyll that emphasizes content rather than aesthetic fluff.">
+    <meta property="og:url" content="http://kieranandrews.com.au/2015/08/learning-ansible/">
+    <meta property="og:site_name" content="Kieran&#39;s Discoveries">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@HiddenTiger" />
+    
+    <meta name="twitter:title" content="Learning Ansible" />
+    <meta name="twitter:description" content="A simple, beautiful theme for Jekyll that emphasizes content rather than aesthetic fluff." />
+    <meta name="twitter:url" content="http://kieranandrews.com.au/2015/08/learning-ansible/" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+</head>
+
+<body class="site">
+  
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://kieranandrews.com.au" class="site-title">Kieran's Discoveries</a>
+      <nav class="site-nav">
+        
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+    
+
+    
+        <a href="/contact/">Say Hello</a>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+      </nav>
+      <div class="clearfix"></div>
+      
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+        
+
+
+<div class="post-header mb2">
+  <h1>Learning Ansible</h1>
+  <span class="post-meta">Aug 16, 2015</span><br>
+  
+  <span class="post-meta small">
+  
+    2 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <blockquote>
+  <p>In this <a href="http://kieranandrews.com.au/category/dev-ops/ansible/">series of blog posts</a>, I will be talking about <a href="http://www.ansible.com/home">Ansible</a>. Ansible is a powerful automation tool that you can learn quickly.</p>
+</blockquote>
+
+<p>I have recently been working on setting up servers for different applications and having to build quite a lot of identical servers. I have been frustrated with our old infrastructure setup. Some of the problems are different package versions across clusters and having to manually update each box (which is prone to human error). This has caused many problems, for example one server in a load balanced cluster displaying issues the others not. This can cause customers issues and can take a long time to debug such issues. Also, building new servers is teduous, slow and error prone.</p>
+
+<p>At other organisations, I have previously used Puppet for this situation. By using Puppet I can automate the build process on the server and since the instructions are in code, I can repeat them on as many servers as needed. Testing it also a lot easier. Even though all of these benefits of Puppet there were still a few frustrations. The configurations would get quite complex and sometimes things would not work as expected and took a long time to debug what was going wrong. Also being an agent based system, I would need to install puppet on the servers first and I wanted to be able to do as much setup as possible automatically.</p>
+
+<p>Doing some research on solutions to this opportunity, I short listed down to the modern tools that looked like improvements on Puppet. The options were Salt Stack, Chef and Ansible. For my proof of concept and analysis I chose Ansible.</p>
+
+<p>Ansible is an agentless solution which uses SSH to perform all of its operations. This means it works with very little installed on the remote machine and a lot of different types of servers. When Ansible starts, it gathers “facts” about the server which it uses in its playbooks. This means you can target specific OS versions for particular operations.</p>
+
+<p>The way to build an Ansbile playbook is to describe how you would like the end state of the server to be and then Ansible will ensure that the server ends up in that state by installing any missing applications or configuration. It has a large amount of Modules inbuilt that wrap common tasks that you would like to do. This makes my playbooks look quite simple and easy to read.</p>
+
+<p>I have been very impressed with Ansible for quite a few projects and I plan to use it for future projects as its easy to use and get a server up and running, configured the way I need with little effort.</p>
+
+<p>I plan to post some further posts in the future about my experiences and share some of my code from my playbooks.</p>
+
+</article>
+
+
+
+
+
+
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname  = 'kieranandrews';
+    var disqus_identifier = '386';
+    var disqus_title      = 'Learning Ansible';
+
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+  <footer class="center">
+  <div class="measure">
+    <small>
+      Theme crafted with &lt;3 by <a href="http://johnotander.com">John Otander</a> (<a href="https://twitter.com/4lpine">@4lpine</a>).<br>
+      &lt;/&gt; available on <a href="https://github.com/johnotander/pixyll">Github</a>.
+    </small>
+  </div>
+</footer>
+
+
+</body>
+</html>

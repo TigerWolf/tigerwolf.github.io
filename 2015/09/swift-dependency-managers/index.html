@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Swift Dependency Managers &#8211; Kieran's Discoveries</title>
+    <link rel="dns-prefetch" href="//maxcdn.bootstrapcdn.com">
+    <link rel="dns-prefetch" href="//cdn.mathjax.org">
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A simple, beautiful theme for Jekyll that emphasizes content rather than aesthetic fluff.">
+    <meta name="robots" content="all">
+    <meta name="author" content="Kieran Andrews">
+    <meta name="keywords" content="Uncategorized">
+    <link rel="canonical" href="http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/2015/09/swift-dependency-managers/">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Kieran's Discoveries" href="https://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="https://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/css/pixyll.css?201604290628" type="text/css">
+
+    <!-- Fonts -->
+    
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+    
+
+    <!-- MathJax -->
+    
+
+    <!-- Verifications -->
+    
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="en_US">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Swift Dependency Managers">
+    <meta property="og:description" content="A simple, beautiful theme for Jekyll that emphasizes content rather than aesthetic fluff.">
+    <meta property="og:url" content="http://kieranandrews.com.au/2015/09/swift-dependency-managers/">
+    <meta property="og:site_name" content="Kieran&#39;s Discoveries">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@HiddenTiger" />
+    
+    <meta name="twitter:title" content="Swift Dependency Managers" />
+    <meta name="twitter:description" content="A simple, beautiful theme for Jekyll that emphasizes content rather than aesthetic fluff." />
+    <meta name="twitter:url" content="http://kieranandrews.com.au/2015/09/swift-dependency-managers/" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+</head>
+
+<body class="site">
+  
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://kieranandrews.com.au" class="site-title">Kieran's Discoveries</a>
+      <nav class="site-nav">
+        
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+    
+
+    
+        <a href="/contact/">Say Hello</a>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+      </nav>
+      <div class="clearfix"></div>
+      
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+        
+
+
+<div class="post-header mb2">
+  <h1>Swift Dependency Managers</h1>
+  <span class="post-meta">Sep 22, 2015</span><br>
+  
+  <span class="post-meta small">
+  
+    2 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>After jumping into Swift and now that its at 2.0, I wanted to share how the Dependency Managers compared to previously with Objective-C projects. Working with swift and including libraries in a project is now slightly different. In the early days of Swift Cocoapods had some issues with integration as swift now requires dynamic libraries in order to integrate a library with a swift project. Objective-C libraries can still be included in your project, but in some cases you need to add a special bridging header in order for them to work.</p>
+
+<p>There are a few options of dependency manager, and I will describe my experience with the top ones at the moment.</p>
+
+<p><strong>Carthage</strong></p>
+
+<p>Since the release of swift, a dependency manager written in the language it was designed for makes sense. Since it only supports swift, this dependency manager is not for everyone. It is simpler than cocoapods and requires dependencies to be manually integrated. You need to add the frameworks to XCode project manually after they have been built with Carthage.</p>
+
+<p>You can install Carthage on OSX with brew.</p>
+
+<pre>brew install carthage </pre>
+
+<p>You add dependencies by creating a Cartfile in your project.</p>
+
+<pre># Require version 2.3.1 or later
+github "ReactiveCocoa/ReactiveCocoa" &gt;= 2.3.1
+
+# Require version 1.x
+github "Mantle/Mantle" ~&gt; 1.0    # (1.0 or later, but less than 2.0)
+
+# Require exactly version 0.4.1
+github "jspahrsummers/libextobjc" == 0.4.1
+
+# Use the latest version
+github "jspahrsummers/xcconfigs"
+</pre>
+
+<p>There libraries can then be built with the following command:</p>
+
+<pre>carthage build </pre>
+
+<p><strong>Cocoapods</strong></p>
+
+<p>This package manager has been very popular and was around before swift. Because of its history, it has mostly been for objective-c projects. The Cocoapods teams have had some early hiccups but they have been able to build in Swift support as well as Objective-C support for Swift projects.</p>
+
+<p>It also has a really good <a href="https://cocoapods.org/">index of packages</a>, this makes discovering packages and new versions of packages really easy. Even when using Carthage, I found myself going here to find the latest version number of a package.</p>
+
+<p>In some cases, some Objective C libraries require a Bridging Header in order to be included into a project. For more information you can view <a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/BuildingCocoaApps/MixandMatch.html">the apple documentation</a>. You can do this by:</p>
+
+<p>File &gt; New &gt; File &gt; (iOS or OS X) &gt; Source &gt; Header File</p>
+
+<p>This file would look something like this:</p>
+
+<pre>#import "XYZCustomCell.h"
+#import "XYZCustomView.h"
+#import "XYZCustomViewController.h"
+</pre>
+
+<p>There are some other dependency managers worth mentioning as well, <a href="https://github.com/jankuca/swm">SWM</a> and <a href="https://github.com/jaz303/taylor">Taylor</a>. You can find them on Github. Taylor is similar to NPM and Bower, dependencies are added to a JSON file</p>
+
+<p>There is a lot of options and flexibility when it comes to dependency management with iOS. Since using these different managers on different projects I have a personal preference of Cocoapods. I prefer having the packages automatically integrated, the easily searchable repository and compatibility with Objective-C and Swift for all of my projects.</p>
+
+</article>
+
+
+
+
+
+
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname  = 'kieranandrews';
+    var disqus_identifier = '384';
+    var disqus_title      = 'Swift Dependency Managers';
+
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+  <footer class="center">
+  <div class="measure">
+    <small>
+      Theme crafted with &lt;3 by <a href="http://johnotander.com">John Otander</a> (<a href="https://twitter.com/4lpine">@4lpine</a>).<br>
+      &lt;/&gt; available on <a href="https://github.com/johnotander/pixyll">Github</a>.
+    </small>
+  </div>
+</footer>
+
+
+</body>
+</html>

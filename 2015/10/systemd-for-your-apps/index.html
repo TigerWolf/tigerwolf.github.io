@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>SystemD for your Apps &#8211; Kieran's Discoveries</title>
+    <link rel="dns-prefetch" href="//maxcdn.bootstrapcdn.com">
+    <link rel="dns-prefetch" href="//cdn.mathjax.org">
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A simple, beautiful theme for Jekyll that emphasizes content rather than aesthetic fluff.">
+    <meta name="robots" content="all">
+    <meta name="author" content="Kieran Andrews">
+    <meta name="keywords" content="Uncategorized">
+    <link rel="canonical" href="http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/2015/10/systemd-for-your-apps/">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Kieran's Discoveries" href="https://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="https://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/css/pixyll.css?201604290628" type="text/css">
+
+    <!-- Fonts -->
+    
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+    
+
+    <!-- MathJax -->
+    
+
+    <!-- Verifications -->
+    
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="en_US">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="SystemD for your Apps">
+    <meta property="og:description" content="A simple, beautiful theme for Jekyll that emphasizes content rather than aesthetic fluff.">
+    <meta property="og:url" content="http://kieranandrews.com.au/2015/10/systemd-for-your-apps/">
+    <meta property="og:site_name" content="Kieran&#39;s Discoveries">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@HiddenTiger" />
+    
+    <meta name="twitter:title" content="SystemD for your Apps" />
+    <meta name="twitter:description" content="A simple, beautiful theme for Jekyll that emphasizes content rather than aesthetic fluff." />
+    <meta name="twitter:url" content="http://kieranandrews.com.au/2015/10/systemd-for-your-apps/" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+</head>
+
+<body class="site">
+  
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://kieranandrews.com.au" class="site-title">Kieran's Discoveries</a>
+      <nav class="site-nav">
+        
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+    
+
+    
+        <a href="/contact/">Say Hello</a>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+      </nav>
+      <div class="clearfix"></div>
+      
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+        
+
+
+<div class="post-header mb2">
+  <h1>SystemD for your Apps</h1>
+  <span class="post-meta">Oct 19, 2015</span><br>
+  
+  <span class="post-meta small">
+  
+    1 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>I have been experimenting with <a href="http://www.phoenixframework.org/">I have been experimenting with</a> for building apps and I have been really impressed with it (stay on the lookout for future posts). One thing I wanted to do was deploy it to a box in production. I wanted the server to stay up and for it to startup when the server was rebooted. There was a few things that stumped me and I was very happy when I was able to work them all out. Here is my final configuration file:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[Unit]
+Description=hello_phoenix Service
+After=network.target
+
+[Service]
+Type=simple
+User=hello_phoenix
+RemainAfterExit=yes
+Environment=MIX_ENV=prod PORT=4000
+WorkingDirectory=/var/www/hello_phoenix/
+ExecStart=/var/www/hello_phoenix/rel/hello_phoenix/bin/hello_phoenix start
+ExecStop=/var/www/hello_phoenix/rel/hello_phoenix/bin/hello_phoenix stop
+Restart=on-failure
+TimeoutSec=300
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+</div>
+
+<p>The things that got me where User= and Environment=. Originally I was trying to use su and set the environment variables in the command. This is ignored. The other thing that also caused me all sorts of problems was that I needed to set RemainAfterExit=yes as the start script actually executes another script and I didnt want systemd to kill the server after it had just started it. Hopefully this helps someone that is in a similar situation or was interested in systemd.</p>
+
+<p>This comprehensive guide on systemd, <a href="https://www.digitalocean.com/community/tutorials/understanding-systemd-units-and-unit-files">https://www.digitalocean.com/community/tutorials/understanding-systemd-units-and-unit-files</a> was very helpful to solving this problem.</p>
+
+</article>
+
+
+
+
+
+
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname  = 'kieranandrews';
+    var disqus_identifier = '453';
+    var disqus_title      = 'SystemD for your Apps';
+
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+  <footer class="center">
+  <div class="measure">
+    <small>
+      Theme crafted with &lt;3 by <a href="http://johnotander.com">John Otander</a> (<a href="https://twitter.com/4lpine">@4lpine</a>).<br>
+      &lt;/&gt; available on <a href="https://github.com/johnotander/pixyll">Github</a>.
+    </small>
+  </div>
+</footer>
+
+
+</body>
+</html>

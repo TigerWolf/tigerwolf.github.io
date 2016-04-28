@@ -1,0 +1,569 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kieran&#39;s Discoveries</title>
+    <description>A simple, beautiful theme for Jekyll that emphasizes content rather than aesthetic fluff.</description>
+    <link>http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/</link>
+    <atom:link href="http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/feed.xml" rel="self" type="application/rss+xml" />
+    
+      <item>
+        <title>SystemD for your Apps</title>
+        <description>&lt;p&gt;I have been experimenting with &lt;a href=&quot;http://www.phoenixframework.org/&quot;&gt;I have been experimenting with&lt;/a&gt; for building apps and I have been really impressed with it (stay on the lookout for future posts). One thing I wanted to do was deploy it to a box in production. I wanted the server to stay up and for it to startup when the server was rebooted. There was a few things that stumped me and I was very happy when I was able to work them all out. Here is my final configuration file:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[Unit]
+Description=hello_phoenix Service
+After=network.target
+
+[Service]
+Type=simple
+User=hello_phoenix
+RemainAfterExit=yes
+Environment=MIX_ENV=prod PORT=4000
+WorkingDirectory=/var/www/hello_phoenix/
+ExecStart=/var/www/hello_phoenix/rel/hello_phoenix/bin/hello_phoenix start
+ExecStop=/var/www/hello_phoenix/rel/hello_phoenix/bin/hello_phoenix stop
+Restart=on-failure
+TimeoutSec=300
+
+[Install]
+WantedBy=multi-user.target
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The things that got me where User= and Environment=. Originally I was trying to use su and set the environment variables in the command. This is ignored. The other thing that also caused me all sorts of problems was that I needed to set RemainAfterExit=yes as the start script actually executes another script and I didnt want systemd to kill the server after it had just started it. Hopefully this helps someone that is in a similar situation or was interested in systemd.&lt;/p&gt;
+
+&lt;p&gt;This comprehensive guide on systemd, &lt;a href=&quot;https://www.digitalocean.com/community/tutorials/understanding-systemd-units-and-unit-files&quot;&gt;https://www.digitalocean.com/community/tutorials/understanding-systemd-units-and-unit-files&lt;/a&gt; was very helpful to solving this problem.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 19 Oct 2015 07:15:48 +1030</pubDate>
+        <link>http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/2015/10/systemd-for-your-apps/</link>
+        <guid isPermaLink="true">http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/2015/10/systemd-for-your-apps/</guid>
+      </item>
+    
+      <item>
+        <title>Swift Dependency Managers</title>
+        <description>&lt;p&gt;After jumping into Swift and now that its at 2.0, I wanted to share how the Dependency Managers compared to previously with Objective-C projects. Working with swift and including libraries in a project is now slightly different. In the early days of Swift Cocoapods had some issues with integration as swift now requires dynamic libraries in order to integrate a library with a swift project. Objective-C libraries can still be included in your project, but in some cases you need to add a special bridging header in order for them to work.&lt;/p&gt;
+
+&lt;p&gt;There are a few options of dependency manager, and I will describe my experience with the top ones at the moment.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Carthage&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Since the release of swift, a dependency manager written in the language it was designed for makes sense. Since it only supports swift, this dependency manager is not for everyone. It is simpler than cocoapods and requires dependencies to be manually integrated. You need to add the frameworks to XCode project manually after they have been built with Carthage.&lt;/p&gt;
+
+&lt;p&gt;You can install Carthage on OSX with brew.&lt;/p&gt;
+
+&lt;pre&gt;brew install carthage &lt;/pre&gt;
+
+&lt;p&gt;You add dependencies by creating a Cartfile in your project.&lt;/p&gt;
+
+&lt;pre&gt;# Require version 2.3.1 or later
+github &quot;ReactiveCocoa/ReactiveCocoa&quot; &amp;gt;= 2.3.1
+
+# Require version 1.x
+github &quot;Mantle/Mantle&quot; ~&amp;gt; 1.0    # (1.0 or later, but less than 2.0)
+
+# Require exactly version 0.4.1
+github &quot;jspahrsummers/libextobjc&quot; == 0.4.1
+
+# Use the latest version
+github &quot;jspahrsummers/xcconfigs&quot;
+&lt;/pre&gt;
+
+&lt;p&gt;There libraries can then be built with the following command:&lt;/p&gt;
+
+&lt;pre&gt;carthage build &lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;Cocoapods&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;This package manager has been very popular and was around before swift. Because of its history, it has mostly been for objective-c projects. The Cocoapods teams have had some early hiccups but they have been able to build in Swift support as well as Objective-C support for Swift projects.&lt;/p&gt;
+
+&lt;p&gt;It also has a really good &lt;a href=&quot;https://cocoapods.org/&quot;&gt;index of packages&lt;/a&gt;, this makes discovering packages and new versions of packages really easy. Even when using Carthage, I found myself going here to find the latest version number of a package.&lt;/p&gt;
+
+&lt;p&gt;In some cases, some Objective C libraries require a Bridging Header in order to be included into a project. For more information you can view &lt;a href=&quot;https://developer.apple.com/library/ios/documentation/Swift/Conceptual/BuildingCocoaApps/MixandMatch.html&quot;&gt;the apple documentation&lt;/a&gt;. You can do this by:&lt;/p&gt;
+
+&lt;p&gt;File &amp;gt; New &amp;gt; File &amp;gt; (iOS or OS X) &amp;gt; Source &amp;gt; Header File&lt;/p&gt;
+
+&lt;p&gt;This file would look something like this:&lt;/p&gt;
+
+&lt;pre&gt;#import &quot;XYZCustomCell.h&quot;
+#import &quot;XYZCustomView.h&quot;
+#import &quot;XYZCustomViewController.h&quot;
+&lt;/pre&gt;
+
+&lt;p&gt;There are some other dependency managers worth mentioning as well, &lt;a href=&quot;https://github.com/jankuca/swm&quot;&gt;SWM&lt;/a&gt; and &lt;a href=&quot;https://github.com/jaz303/taylor&quot;&gt;Taylor&lt;/a&gt;. You can find them on Github. Taylor is similar to NPM and Bower, dependencies are added to a JSON file&lt;/p&gt;
+
+&lt;p&gt;There is a lot of options and flexibility when it comes to dependency management with iOS. Since using these different managers on different projects I have a personal preference of Cocoapods. I prefer having the packages automatically integrated, the easily searchable repository and compatibility with Objective-C and Swift for all of my projects.&lt;/p&gt;
+</description>
+        <pubDate>Tue, 22 Sep 2015 01:28:51 +0930</pubDate>
+        <link>http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/2015/09/swift-dependency-managers/</link>
+        <guid isPermaLink="true">http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/2015/09/swift-dependency-managers/</guid>
+      </item>
+    
+      <item>
+        <title>Ansible &amp;#8211; Inventory Managment</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;In this &lt;a href=&quot;http://kieranandrews.com.au/category/dev-ops/ansible/&quot;&gt;series of blog posts&lt;/a&gt;, I will be talking about &lt;a href=&quot;http://www.ansible.com/home&quot;&gt;Ansible&lt;/a&gt;. Ansible is a powerful automation tool that you can learn quickly.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;When using Ansible, I have been constantly uneasy about how inventory is managed. If you feel the same, in this article I will try to explain how I structure my inventories and where I think it could be improved.&lt;/p&gt;
+
+&lt;p&gt;The Ansible documentation recommends to put servers in groups by type, like so:&lt;/p&gt;
+
+&lt;pre&gt;mail.example.com
+
+[webservers]
+foo.example.com
+bar.example.com
+
+[dbservers]
+one.example.com
+two.example.com
+three.example.com
+&lt;/pre&gt;
+
+&lt;p&gt;In your playbook you can then target specific parts to one group. For example your webservers will have different packages compared to your db servers. It also allows you to limit deployment to one group. For example with the –limit flag you can limit your deployment to just the dbservers.&lt;/p&gt;
+
+&lt;p&gt;An alternative approach I have been taking is to create seperate inventories for each environment. Like Production, UAT and Testing. For each environment I create an inventory like so:&lt;/p&gt;
+
+&lt;pre&gt;[webservers]
+web-1-prd.example.com
+web-2-prd.example.com
+
+[dbservers]
+db-1-prd.example.com
+&lt;/pre&gt;
+
+&lt;p&gt;UAT:&lt;/p&gt;
+
+&lt;pre&gt;[webservers]
+web-1-uat.example.com
+web-2-uat.example.com
+
+[dbservers]
+db-1-uat.example.com
+&lt;/pre&gt;
+
+&lt;p&gt;This means that when I run my Ansible command, I have a separate command for each environment. This means there is less of a chance of deploying to the wrong servers and I can deploy an entire environment all at once easily. Those commands would look like this:&lt;/p&gt;
+
+&lt;pre&gt;ansible-playbook rails_stack.yml -i uat&lt;/pre&gt;
+
+&lt;pre&gt;ansible-playbook rails_stack.yml -i prod&lt;/pre&gt;
+
+&lt;p&gt;The Ansible &lt;a href=&quot;http://docs.ansible.com/ansible/playbooks_best_practices.html&quot;&gt;best practices document&lt;/a&gt; recommends this as well and naming your groups based on their location (data center).&lt;/p&gt;
+</description>
+        <pubDate>Fri, 11 Sep 2015 07:48:04 +0930</pubDate>
+        <link>http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/2015/09/ansible-inventory-managment/</link>
+        <guid isPermaLink="true">http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/2015/09/ansible-inventory-managment/</guid>
+      </item>
+    
+      <item>
+        <title>Ansible &amp;#8211; Structuring your playbooks</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;In this &lt;a href=&quot;http://kieranandrews.com.au/category/dev-ops/ansible/&quot;&gt;series of blog posts&lt;/a&gt;, I will be talking about &lt;a href=&quot;http://www.ansible.com/home&quot;&gt;Ansible&lt;/a&gt;. Ansible is a powerful automation tool that you can learn quickly.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Ansible is very flexible. When starting you will most likely do everything in a single .yaml file. As things get more complex, it becomes very useful to start separating things out into files and folders. There are several ways to do this and some recommendations from Ansible about the recommended ways of going about this.&lt;/p&gt;
+
+&lt;p&gt;The simplest way is to just include another file, for example:&lt;/p&gt;
+
+&lt;pre class=&quot;lang:yaml&quot;&gt;tasks:
+
+  - include: tasks/foo.yml
+&lt;/pre&gt;
+
+&lt;p&gt;There are much better ways to structure your files though. If you head over to the Ansible website there is some best practices which are very good. It can be a bit confusing at first digesting all of the recommendations at once, so I will attempt to explain what I have found the most useful.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://docs.ansible.com/ansible/playbooks_best_practices.html&quot;&gt;http://docs.ansible.com/ansible/playbooks_best_practices.html&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;For starters if you name folders in a particular way in your playbook directory, Ansible will automatically discover them and allow you to use them in your playbook. The most useful usage of this is if you have a common set of instructions that would would run on all of your machines. If you create a folder called roles in and then inside create a folder called common,&lt;/p&gt;
+
+&lt;pre&gt;roles
+└── common
+    ├── handlers
+    │   └── main.yml
+    └── tasks
+        └── main.yml
+&lt;/pre&gt;
+
+&lt;p&gt;Then inside your main playbook you can just list the role that you just created and it will run for that particular host:&lt;/p&gt;
+
+&lt;pre&gt;---
+- hosts:
+    - web
+  roles:
+    - common
+&lt;/pre&gt;
+
+&lt;p&gt;For a recent playbook I built, I my directory structure looks like the one below. For all of my hosts I ran the common script and then on the other hosts I picked and chose the roles I needed for them. This also makes it easy to write a common setup role that you could share across playbooks.&lt;/p&gt;
+
+&lt;pre&gt;roles
+├── admin
+│   └── tasks
+│       └── main.yml
+├── common
+│   ├── handlers
+│   │   └── main.yml
+│   └── tasks
+│       └── main.yml
+├── edit
+│   └── tasks
+│       └── main.yml
+└── mongodb
+    └── tasks
+        └── main.yml
+&lt;/pre&gt;
+
+&lt;p&gt;As you can see, this offers you many benefits. It makes your playbooks easier to read and maintain. Splitting up your playbook also allows you to pick and choose roles that you would like to run on a particular server.&lt;/p&gt;
+</description>
+        <pubDate>Fri, 11 Sep 2015 06:44:26 +0930</pubDate>
+        <link>http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/2015/09/ansible-structuring-your-playbooks/</link>
+        <guid isPermaLink="true">http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/2015/09/ansible-structuring-your-playbooks/</guid>
+      </item>
+    
+      <item>
+        <title>Ansible Packages</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;In this &lt;a href=&quot;http://kieranandrews.com.au/category/dev-ops/ansible/&quot;&gt;series of blog posts&lt;/a&gt;, I will be talking about &lt;a href=&quot;http://www.ansible.com/home&quot;&gt;Ansible&lt;/a&gt;. Ansible is a powerful automation tool that you can learn quickly.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;One of the important Ansible Modules that I use in almost every playbook is the package manager module to install and update system packages. This is important for installing dependencies for your application.&lt;/p&gt;
+
+&lt;p&gt;You can use this in your playbook by using either the yum or apt modules depending on your target operating system.&lt;/p&gt;
+
+&lt;p&gt;http://docs.ansible.com/ansible/yum_module.html&lt;/p&gt;
+
+&lt;p&gt;http://docs.ansible.com/ansible/apt_module.html&lt;/p&gt;
+
+&lt;p&gt;For single packages its quite easy:&lt;/p&gt;
+
+&lt;pre class=&quot;lang:yaml&quot;&gt;- name: ensure apache is at the latest version
+  yum: pkg=httpd state=latest
+&lt;/pre&gt;
+
+&lt;p&gt;You can even specify options like latest which will ensure the package is the latest version.&lt;/p&gt;
+
+&lt;p&gt;Moving onto bigger things, if you have a whole lot of packages you want installed on the server you can bunch them all up together, for example:&lt;/p&gt;
+
+&lt;pre class=&quot;lang:yaml&quot;&gt;- name: ensure required packages are installed
+  action: yum name= state=present
+  with_items:
+    - libyaml
+    - git
+    - ntp
+    - libselinux-python
+&lt;/pre&gt;
+
+&lt;p&gt;Its also possible to use the command to install RPMs and as a bonus it wont mess up your yum database. You can do this by providing the path to the RPM like so:&lt;/p&gt;
+
+&lt;pre class=&quot;lang:yaml&quot;&gt;- name: ensure required packages are installed
+  sudo: yes
+  action: yum name= state=present disable_gpg_check=yes
+  with_items:
+    - /tmp/command-tool.rpm
+    - /tmp/main-config.rpm
+    - /tmp/app-deploy.rpm
+&lt;/pre&gt;
+
+&lt;p&gt;As you can see, this is a simple way to have packages on your servers installed and kept up to date. There are many more options on these modules as you will find in the ansible documentation, but these simple examples should get you started.&lt;/p&gt;
+</description>
+        <pubDate>Fri, 04 Sep 2015 05:07:02 +0930</pubDate>
+        <link>http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/2015/09/ansible-packages/</link>
+        <guid isPermaLink="true">http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/2015/09/ansible-packages/</guid>
+      </item>
+    
+      <item>
+        <title>Learning Ansible</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;In this &lt;a href=&quot;http://kieranandrews.com.au/category/dev-ops/ansible/&quot;&gt;series of blog posts&lt;/a&gt;, I will be talking about &lt;a href=&quot;http://www.ansible.com/home&quot;&gt;Ansible&lt;/a&gt;. Ansible is a powerful automation tool that you can learn quickly.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;I have recently been working on setting up servers for different applications and having to build quite a lot of identical servers. I have been frustrated with our old infrastructure setup. Some of the problems are different package versions across clusters and having to manually update each box (which is prone to human error). This has caused many problems, for example one server in a load balanced cluster displaying issues the others not. This can cause customers issues and can take a long time to debug such issues. Also, building new servers is teduous, slow and error prone.&lt;/p&gt;
+
+&lt;p&gt;At other organisations, I have previously used Puppet for this situation. By using Puppet I can automate the build process on the server and since the instructions are in code, I can repeat them on as many servers as needed. Testing it also a lot easier. Even though all of these benefits of Puppet there were still a few frustrations. The configurations would get quite complex and sometimes things would not work as expected and took a long time to debug what was going wrong. Also being an agent based system, I would need to install puppet on the servers first and I wanted to be able to do as much setup as possible automatically.&lt;/p&gt;
+
+&lt;p&gt;Doing some research on solutions to this opportunity, I short listed down to the modern tools that looked like improvements on Puppet. The options were Salt Stack, Chef and Ansible. For my proof of concept and analysis I chose Ansible.&lt;/p&gt;
+
+&lt;p&gt;Ansible is an agentless solution which uses SSH to perform all of its operations. This means it works with very little installed on the remote machine and a lot of different types of servers. When Ansible starts, it gathers “facts” about the server which it uses in its playbooks. This means you can target specific OS versions for particular operations.&lt;/p&gt;
+
+&lt;p&gt;The way to build an Ansbile playbook is to describe how you would like the end state of the server to be and then Ansible will ensure that the server ends up in that state by installing any missing applications or configuration. It has a large amount of Modules inbuilt that wrap common tasks that you would like to do. This makes my playbooks look quite simple and easy to read.&lt;/p&gt;
+
+&lt;p&gt;I have been very impressed with Ansible for quite a few projects and I plan to use it for future projects as its easy to use and get a server up and running, configured the way I need with little effort.&lt;/p&gt;
+
+&lt;p&gt;I plan to post some further posts in the future about my experiences and share some of my code from my playbooks.&lt;/p&gt;
+</description>
+        <pubDate>Sun, 16 Aug 2015 19:27:34 +0930</pubDate>
+        <link>http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/2015/08/learning-ansible/</link>
+        <guid isPermaLink="true">http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/2015/08/learning-ansible/</guid>
+      </item>
+    
+      <item>
+        <title>GovHack</title>
+        <description>&lt;p&gt;&lt;img src=&quot;http://www.nsla.org.au/sites/www.nsla.org.au/files/styles/large/public/govhack14_lg.jpg?itok=vZ68eZdN&quot; width=&quot;600&quot; height=&quot;300&quot; class=&quot;alignnone&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;I will be attending &lt;a href=&quot;https://www.govhack.org/&quot;&gt;GovHack&lt;/a&gt; this year and I will be with a new team this year.&lt;/p&gt;
+
+&lt;p&gt;Our team is a lot more balanced and not as technical as last year so this should give us a better chance at delivering a more well rounded product this year. What is really exciting is that we have people with a technical skill focus well as business, data crunching and creative talent. These skills are really important and you want to be able to build something during the event, ensure that the idea targets the needs of the government agencies that are running the various competitions and creative talent to create an exciting video as well as the whole team to collaborate on your message to communicate effectively to your judges what your idea is all about.&lt;/p&gt;
+
+&lt;p&gt;If you are entering the competition, good luck!&lt;/p&gt;
+</description>
+        <pubDate>Mon, 29 Jun 2015 19:59:55 +0930</pubDate>
+        <link>http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/2015/06/govhack/</link>
+        <guid isPermaLink="true">http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/2015/06/govhack/</guid>
+      </item>
+    
+      <item>
+        <title>RubyMotion Android Beta Tip</title>
+        <description>&lt;p&gt;I have been trying out the new Android RubyMotion beta and have been trying out the code samples.&lt;/p&gt;
+
+&lt;p&gt;One thing I was frustrated about was having to keep putting the NDK and SDK path in the Rakefile. Here is a quick tip to make it easier.&lt;/p&gt;
+
+&lt;p&gt;Create a file somewhere like ~/motion/common.rb&lt;/p&gt;
+
+&lt;p&gt;`I have been trying out the new Android RubyMotion beta and have been trying out the code samples.&lt;/p&gt;
+
+&lt;p&gt;One thing I was frustrated about was having to keep putting the NDK and SDK path in the Rakefile. Here is a quick tip to make it easier.&lt;/p&gt;
+
+&lt;p&gt;Create a file somewhere like ~/motion/common.rb&lt;/p&gt;
+
+&lt;p&gt;`&lt;/p&gt;
+
+&lt;p&gt;Inside the Rakefile for each app:&lt;/p&gt;
+
+&lt;p&gt;``I have been trying out the new Android RubyMotion beta and have been trying out the code samples.&lt;/p&gt;
+
+&lt;p&gt;One thing I was frustrated about was having to keep putting the NDK and SDK path in the Rakefile. Here is a quick tip to make it easier.&lt;/p&gt;
+
+&lt;p&gt;Create a file somewhere like ~/motion/common.rb&lt;/p&gt;
+
+&lt;p&gt;`I have been trying out the new Android RubyMotion beta and have been trying out the code samples.&lt;/p&gt;
+
+&lt;p&gt;One thing I was frustrated about was having to keep putting the NDK and SDK path in the Rakefile. Here is a quick tip to make it easier.&lt;/p&gt;
+
+&lt;p&gt;Create a file somewhere like ~/motion/common.rb&lt;/p&gt;
+
+&lt;p&gt;`&lt;/p&gt;
+
+&lt;p&gt;Inside the Rakefile for each app:&lt;/p&gt;
+
+&lt;p&gt;``&lt;/p&gt;
+
+&lt;p&gt;Thanks to JP, you can also add this to your ~/.bash_profile or ~/.zshrc&lt;/p&gt;
+
+&lt;p&gt;```I have been trying out the new Android RubyMotion beta and have been trying out the code samples.&lt;/p&gt;
+
+&lt;p&gt;One thing I was frustrated about was having to keep putting the NDK and SDK path in the Rakefile. Here is a quick tip to make it easier.&lt;/p&gt;
+
+&lt;p&gt;Create a file somewhere like ~/motion/common.rb&lt;/p&gt;
+
+&lt;p&gt;`I have been trying out the new Android RubyMotion beta and have been trying out the code samples.&lt;/p&gt;
+
+&lt;p&gt;One thing I was frustrated about was having to keep putting the NDK and SDK path in the Rakefile. Here is a quick tip to make it easier.&lt;/p&gt;
+
+&lt;p&gt;Create a file somewhere like ~/motion/common.rb&lt;/p&gt;
+
+&lt;p&gt;`&lt;/p&gt;
+
+&lt;p&gt;Inside the Rakefile for each app:&lt;/p&gt;
+
+&lt;p&gt;``I have been trying out the new Android RubyMotion beta and have been trying out the code samples.&lt;/p&gt;
+
+&lt;p&gt;One thing I was frustrated about was having to keep putting the NDK and SDK path in the Rakefile. Here is a quick tip to make it easier.&lt;/p&gt;
+
+&lt;p&gt;Create a file somewhere like ~/motion/common.rb&lt;/p&gt;
+
+&lt;p&gt;`I have been trying out the new Android RubyMotion beta and have been trying out the code samples.&lt;/p&gt;
+
+&lt;p&gt;One thing I was frustrated about was having to keep putting the NDK and SDK path in the Rakefile. Here is a quick tip to make it easier.&lt;/p&gt;
+
+&lt;p&gt;Create a file somewhere like ~/motion/common.rb&lt;/p&gt;
+
+&lt;p&gt;`&lt;/p&gt;
+
+&lt;p&gt;Inside the Rakefile for each app:&lt;/p&gt;
+
+&lt;p&gt;``&lt;/p&gt;
+
+&lt;p&gt;Thanks to JP, you can also add this to your ~/.bash_profile or ~/.zshrc&lt;/p&gt;
+
+&lt;p&gt;```&lt;/p&gt;
+
+&lt;p&gt;If you have a better way to do it, post in the comments below.&lt;/p&gt;
+</description>
+        <pubDate>Wed, 24 Sep 2014 06:13:28 +0930</pubDate>
+        <link>http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/2014/09/rubymotion-android-beta-tip/</link>
+        <guid isPermaLink="true">http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/2014/09/rubymotion-android-beta-tip/</guid>
+      </item>
+    
+      <item>
+        <title>Talk: Introduction to Mongodb and Mongoid</title>
+        <description>&lt;p&gt;I did a talk recently at adelaide.rb and I thought I would share my talk notes, slides and code on my blog for you all to see. Click read more to see it all:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/TigerWolf/mongoid_presentation&quot; title=&quot;https://github.com/TigerWolf/mongoid_presentation&quot;&gt;https://github.com/TigerWolf/mongoid_presentation&lt;/a&gt;&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;strong&gt;Presentation notes&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;So what is it? Its not quite like the relational databases that most of you would be familiar with like Postgres, Mysql and sqllite. Mongodb is a database that does a really good job of storing documents. Its classified as a NoSQL database and ditches the traditional table-like schema and instead uses JSON like structures. It is used by some major websites including: Craigslist, eBay, Foursquare, SourceForge, and The New York Times. Mongo is the most popular NoSQL database.&lt;/p&gt;
+
+&lt;p&gt;Why would you use it? Well mongodb was designed to be fast scalable and flexible. This is mostly because it doesn’t have relationships or a strict schema. It is also really easy to horizontally scale by adding more nodes. By design, a lot of the work and processing is done on the client (mongoid) over the db server. These design decisions all help keep it fast, scalable and flexible.&lt;/p&gt;
+
+&lt;p&gt;One of the cool things about Mongo is that the console is a javascript interpreter which would be familiar to a lot of you here today.&lt;/p&gt;
+
+&lt;p&gt;I am sure you are keen to see a demo! I will load up the console now and show you around.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;See the git repository for the demo.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Now that I have shown you the awesomeness of mongodb. Lets check out mongoid, the ruby ORM for mongodb. The philosophy of Mongoid is to provide a familiar API to Ruby developers who have been using ActiveRecord of Data Mapper.&lt;/p&gt;
+
+&lt;p&gt;Mongoid community:&lt;/p&gt;
+
+&lt;p&gt;The mongoid community is quite abundant, you can join in at&lt;/p&gt;
+
+&lt;p&gt;It has Solid documentation at http://mongoid.org&lt;/p&gt;
+
+&lt;p&gt;An active irc at #mongoid&lt;/p&gt;
+
+&lt;p&gt;Also a Mailing List http://groups.google.com/group/mongoid&lt;/p&gt;
+
+&lt;p&gt;It also hooks into Active Model, so you get all of the rails goodness. I will show you how to use all of these with Mongoid.&lt;/p&gt;
+
+&lt;p&gt;validations&lt;/p&gt;
+
+&lt;p&gt;mass assignment&lt;/p&gt;
+
+&lt;p&gt;serialization (like to_json)&lt;/p&gt;
+
+&lt;p&gt;scopes&lt;/p&gt;
+
+&lt;p&gt;callbacks&lt;/p&gt;
+
+&lt;p&gt;timestamps.&lt;/p&gt;
+
+&lt;p&gt;and many more.&lt;/p&gt;
+
+&lt;p&gt;Its also framework agnostic and will work with Sinatra or Padrino.&lt;/p&gt;
+
+&lt;p&gt;It also works alongside other ORM’s. For example ActiveRecord or DataMapper. You can create relationships between the two and easily model data that is better in a relational database separately. This allows for a lot of flexibility.&lt;/p&gt;
+
+&lt;p&gt;Some of the main features of the Mongoid gem are:&lt;/p&gt;
+
+&lt;p&gt;Its powerful query language. It will be familiar to ActiveRecord users. Here are some examples for querying a user. There is standard stuff like searching by name and also greater than and less than operators.&lt;/p&gt;
+
+&lt;p&gt;User.where(:name =&amp;gt; “John”)&lt;/p&gt;
+
+&lt;p&gt;User.all(:age.lt =&amp;gt; 24, :age.gt =&amp;gt; 18)&lt;/p&gt;
+
+&lt;p&gt;User.where(:title.in =&amp;gt; %w(Ms Mrs))&lt;/p&gt;
+
+&lt;p&gt;You can also search in sub documents, like the address of a person.&lt;/p&gt;
+
+&lt;p&gt;Person.where(“addresses.locations.name” =&amp;gt; “Chicago”)&lt;/p&gt;
+
+&lt;p&gt;You can also set named scopes just like in activerecord:&lt;/p&gt;
+
+&lt;p&gt;class User&lt;/p&gt;
+
+&lt;p&gt;scope :active, :status =&amp;gt; ‘active’&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;scope :over, :lambda {&lt;/td&gt;
+      &lt;td&gt;age&lt;/td&gt;
+      &lt;td&gt;where(:age.gt =&amp;gt; age) }&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;end&lt;/p&gt;
+
+&lt;p&gt;User.where(:name =&amp;gt; /^J/).active.over(40)&lt;/p&gt;
+
+&lt;p&gt;This makes it easy to clean up code where you use these queries regularly.&lt;/p&gt;
+
+&lt;p&gt;Validation&lt;/p&gt;
+
+&lt;p&gt;Mongoid includes ActiveModel::Validations to supply the basic validation as well as a associated and uniqueness validator.&lt;/p&gt;
+
+&lt;p&gt;Some examples:&lt;/p&gt;
+
+&lt;p&gt;validates_associated :episodes&lt;/p&gt;
+
+&lt;p&gt;validates :episodes, associated: true&lt;/p&gt;
+
+&lt;p&gt;Be aware that Mongoid only validates documents in memory.&lt;/p&gt;
+
+&lt;p&gt;validates_length_of :password, minimum: 8, maximum: 16&lt;/p&gt;
+
+&lt;p&gt;validates :password, length: { minimum: 8, maximum: 16 }&lt;/p&gt;
+
+&lt;p&gt;It also has the alternative syntax as you can see in the examples.&lt;/p&gt;
+
+&lt;p&gt;Another awesome feature of mongodb and mongoid is how it handles&lt;/p&gt;
+
+&lt;p&gt;Geospacial indexes&lt;/p&gt;
+
+&lt;p&gt;Say you had a set of geo locations that you wanted to store you could model them like so.&lt;/p&gt;
+
+&lt;p&gt;class Spot&lt;/p&gt;
+
+&lt;p&gt;include Mongoid::Document&lt;/p&gt;
+
+&lt;p&gt;field :name, :type =&amp;gt; String&lt;/p&gt;
+
+&lt;p&gt;field :latlng, :type =&amp;gt; Array&lt;/p&gt;
+
+&lt;p&gt;index [[:latlng, Mongo::GEO2D]]&lt;/p&gt;
+
+&lt;p&gt;end&lt;/p&gt;
+
+&lt;p&gt;Using this you could then create a location.&lt;/p&gt;
+
+&lt;p&gt;Ruby Spot.create( :name =&amp;gt; “Majoran Distillery”, :latlng =&amp;gt; [34.924349,138.600379] )&lt;/p&gt;
+
+&lt;p&gt;Using this location, and having others already stored in your database you can do&lt;/p&gt;
+
+&lt;p&gt;Spot.where(:latlng.near =&amp;gt; majoran.latlng)&lt;/p&gt;
+
+&lt;p&gt;#=&amp;gt; [“Majoran Distillery”, ”Cibo”, “Westpac” ]&lt;/p&gt;
+
+&lt;p&gt;Or also:&lt;/p&gt;
+
+&lt;p&gt;Bar.where(:likes.gt =&amp;gt; 100).geo_near([ 50, 12 ]).spherical&lt;/p&gt;
+
+&lt;p&gt;There are some popular projects out there that use mongodb. Be sure to check out locomotive cms, Shapado a Q&amp;amp;A style site and Graylog2 for sorting server logs.&lt;/p&gt;
+
+&lt;p&gt;Application Spotlight:&lt;/p&gt;
+
+&lt;p&gt;Now I will show you a demo application that makes use of Mongoid and displays a list of TV shows from a gem that I am currently working on. This is just a rough use case.&lt;/p&gt;
+
+&lt;p&gt;The interface is using angular js and calls the sinatra backend to display the list of TV shows.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;See this is the git repository.&lt;/em&gt;&lt;/p&gt;
+</description>
+        <pubDate>Thu, 03 Apr 2014 04:21:51 +1030</pubDate>
+        <link>http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/2014/04/talk-introduction-to-mongodb-and-mongoid/</link>
+        <guid isPermaLink="true">http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/2014/04/talk-introduction-to-mongodb-and-mongoid/</guid>
+      </item>
+    
+      <item>
+        <title>330</title>
+        <description>&lt;p&gt;It was interesting to find out how they confirmed that MH370 crashed over the indian ocean.&lt;/p&gt;
+
+&lt;p&gt;The planes navigation system was communicating to a satellite even though the main transponder was turned off and it communicated every hour. The Satcom “which collects information such as location, altitude, heading and speed, and sends it through Inmarsat’s satellites into their network”. The signal didnt contain any gps or location data so the analysts used techniques never used before, using the doppler effect (which describes how a wave changes frequency relative to the movement of an observer) and mathematical analysis so they could work out where the plane last was before it crashed. It was suspected the plane was above 30,000ft before it crashed.&lt;/p&gt;
+
+&lt;p&gt;The challenge now will be finding the black box before the battery runs out for the device in the black box that “pings” its location. If they do find it then the challenge of recovering it from such great depths in sea that has strong currents and dangerous weather.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://kieranandrews.com.au/wp-content/uploads/2014/03/MH370_Mar17.jpg&quot;&gt;&lt;img src=&quot;http://kieranandrews.com.au/wp-content/uploads/2014/03/MH370_Mar17-265x300.jpg&quot; alt=&quot;MH370_Mar17&quot; width=&quot;265&quot; height=&quot;300&quot; class=&quot;alignnone size-medium wp-image-333&quot; srcset=&quot;http://kieranandrews.com.au/wp-content/uploads/2014/03/MH370_Mar17-265x300.jpg 265w, http://kieranandrews.com.au/wp-content/uploads/2014/03/MH370_Mar17.jpg 693w&quot; sizes=&quot;(max-width: 265px) 100vw, 265px&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://m.smh.com.au/world/mh370-search-how-new-satellite-data-confirmed-malaysia-airlines-plane-was-lost-20140325-hvme8.html&quot; title=&quot;http://m.smh.com.au/world/mh370-search-how-new-satellite-data-confirmed-malaysia-airlines-plane-was-lost-20140325-hvme8.html&quot;&gt;http://m.smh.com.au/world/mh370-search-how-new-satellite-data-confirmed-malaysia-airlines-plane-was-lost-20140325-hvme8.html&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.gmanetwork.com/news/story/353977/scitech/technology/inmarsat-analyzed-mh370-pings-to-plot-final-route&quot;&gt;http://www.gmanetwork.com/news/story/353977/scitech/technology/inmarsat-analyzed-mh370-pings-to-plot-final-route&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Tue, 25 Mar 2014 17:44:42 +1030</pubDate>
+        <link>http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/2014/03/330/</link>
+        <guid isPermaLink="true">http://kieranandrews.com.auhttps://dl.dropboxusercontent.com/u/1417817/Kieran%20Blog/2014/03/330/</guid>
+      </item>
+    
+  </channel>
+</rss>
